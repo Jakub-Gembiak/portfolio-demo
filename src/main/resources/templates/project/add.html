@@ -6,7 +6,7 @@
 </head>
 <body>
 <section>
-    <form th:action="@{/project/add}" th:method="post" th:object="${createProjectCommand}">
+    <form th:action="@{/projects/add}" th:method="post" th:object="${createProjectCommand}">
         <div>
             <label>Nazwa projektu:
                 <input type="text" th:field="*{name}" th:name="name"/>
