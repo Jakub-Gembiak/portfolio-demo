@@ -12,12 +12,14 @@ import projects.portfoliodemo.domain.model.User;
 import projects.portfoliodemo.domain.model.UserDetails;
 import projects.portfoliodemo.domain.repositories.UserRepository;
 import projects.portfoliodemo.exception.UserAlreadyExistsException;
+import projects.portfoliodemo.web.command.EditUserCommand;
 import projects.portfoliodemo.web.command.RegisterUserCommand;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.Set;
 
-@Service @Transactional
+@Service
 @Slf4j @RequiredArgsConstructor
 public class UserService {
 
@@ -25,6 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public Long create(RegisterUserCommand registerUserCommand) {
         log.debug("Dane użytkownika do zapisania: {}", registerUserCommand);
 
@@ -57,5 +60,19 @@ public class UserService {
         log.debug("Podsumowanie danych użytkownika: {}", summary);
 
         return summary;
+    }
+
+    @Transactional
+    public boolean edit(EditUserCommand editUserCommand) {
+        log.debug("Dane do edycji użytkownika: {}", editUserCommand);
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.getAuthenticatedUser(username);
+        log.debug("Edycja użytkownika: {}", user);
+
+        user = userConverter.from(editUserCommand, user);
+        log.debug("Zmodyfikowane dane użytkownika: {}", user.getDetails());
+
+        return true;
     }
 }
