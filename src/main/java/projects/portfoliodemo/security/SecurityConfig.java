@@ -20,6 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    //Manager autentykacji
+    //po to jest CustomUserDetailService zeby spring security nie łączył się bezpośrednio z bazą danych
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customDetailsService)
