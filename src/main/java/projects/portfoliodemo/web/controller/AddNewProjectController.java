@@ -14,19 +14,19 @@ import projects.portfoliodemo.web.command.CreateProjectCommand;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/projects")
+@RequestMapping("/projects/add")
 @Slf4j @RequiredArgsConstructor
 public class AddNewProjectController {
 
     private final ProjectService projectService;
 
-    @GetMapping("/add")
+    @GetMapping
     public String getAddProjectPage(Model model) {
         model.addAttribute("createProjectCommand", new CreateProjectCommand());
         return "project/add";
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public String processAddProject(@Valid CreateProjectCommand createProjectCommand,
                                     BindingResult bindings){
         log.debug("Dane do utworzenia projektu: {}", createProjectCommand);
