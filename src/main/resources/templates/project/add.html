@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dodaj nowy projekt</title>
 </head>
 <body>
-
+<section>
+    <form th:action="@{/project/add}" th:method="post" th:object="${createProjectCommand}">
+        <div>
+            <label>Nazwa projektu:
+                <input type="text" th:field="*{name}" th:name="name"/>
+            </label>
+            <div th:if="${#fields.hasErrors('name')}">
+                <span th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
+            </div>
+        </div>
+        <div>
+            <label>Link do repozytorium:
+                <input type="url" th:field="*{url}" th:name="url"/>
+            </label>
+            <div th:if="${#fields.hasErrors('url')}">
+                <span th:each="err : ${#fields.errors('url')}" th:text="${err}"></span>
+            </div>
+        </div>
+        <div>
+            <label>Opis projektu:
+                <textarea th:field="*{description}" th:name="description"></textarea>
+            </label>
+            <div th:if="${#fields.hasErrors('description')}">
+                <span th:each="err : ${#fields.errors('description')}" th:text="${err}"></span>
+            </div>
+        </div>
+        <div>
+            <button type="submit">Zapisz</button>
+        </div>
+    </form>
+</section>
 </body>
 </html>
